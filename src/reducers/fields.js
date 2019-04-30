@@ -28,16 +28,49 @@ const fields = (state = initialState, action) => {
           value: action.payload.value,
         },
       };
+
     case CHECK_VALUE:
       if (action.payload.value.length === 0) {
         return {
           ...state,
           [action.payload.fieldName]: {
             ...state[action.payload.fieldName],
-            error: 'Имя должно быть не менее 5 символов',
+            error: 'Это обязательный вопрос.',
           },
         };
       }
+      if (
+        action.payload.fieldName === 'firstName'
+        && action.payload.value.length < 5
+      ) {
+        return {
+          ...state,
+          [action.payload.fieldName]: {
+            ...state[action.payload.fieldName],
+            error: 'Имя должно быть не менее 5 символов.',
+          },
+        };
+      }
+      if (
+        action.payload.fieldName === 'password'
+        && action.payload.value.length < 8
+      ) {
+        return {
+          ...state,
+          [action.payload.fieldName]: {
+            ...state[action.payload.fieldName],
+            error: 'Пароль должнено быть не менее 8 символов.',
+          },
+        };
+      }
+      return {
+        ...state,
+        [action.payload.fieldName]: {
+          ...state[action.payload.fieldName],
+          error: '',
+        },
+      };
+
     default:
       return state;
   }

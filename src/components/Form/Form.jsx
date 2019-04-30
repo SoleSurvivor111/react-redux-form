@@ -13,7 +13,7 @@ export default class Form extends React.Component {
 
   onChangeValue = (e) => {
     const { onChangeValue } = this.props;
-    onChangeValue(e.target.name, e.target.value)
+    onChangeValue(e.target.name, e.target.value);
   };
 
   onCheckValue = (e) => {
@@ -74,23 +74,23 @@ export default class Form extends React.Component {
         <TextField
           name="firstName"
           hintText="Введите имя"
-          floatingLabelText="Имя"
+          floatingLabelText="Имя*"
           value={firstName.value}
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
           errorText={firstName.error}
           floatingLabelFixed
+          onChange={this.onChangeValue}
+          onBlur={this.onCheckValue}
         />
         <br />
         <TextField
           name="lastName"
           hintText="Введите фамилию"
           floatingLabelText="Фамилия"
-          onBlur={this.onChangeValue}
           value={lastName.value}
-          onChange={e => this.change(e)}
           errorText={lastName.error}
           floatingLabelFixed
+          onChange={this.onChangeValue}
+          onBlur={this.onCheckValue}
         />
         <br />
         <TextField
@@ -98,9 +98,10 @@ export default class Form extends React.Component {
           hintText="Введите отчество"
           floatingLabelText="Образование"
           value={patronymic.value}
-          onChange={e => this.change(e)}
           errorText={patronymic.error}
           floatingLabelFixed
+          onChange={this.onChangeValue}
+          onBlur={this.onCheckValue}
         />
         <br />
         <TextField
@@ -108,20 +109,21 @@ export default class Form extends React.Component {
           hintText="дд.мм.гггг"
           floatingLabelText="Дата рождения"
           value={firstName.value}
-          onChange={e => this.change(e)}
           errorText={firstName.error}
           type="text"
           floatingLabelFixed
+          onChange={this.onChangeValue}
+          onBlur={this.onCheckValue}
         />
         <br />
         <TextField
           name="email"
           hintText="Email"
           floatingLabelText="Email"
-          value={email.error.value}
-          onChange={e => this.change(e)}
           errorText={email.error}
           floatingLabelFixed
+          onChange={this.onChangeValue}
+          onBlur={this.onCheckValue}
         />
         <br />
         <TextField
@@ -129,10 +131,11 @@ export default class Form extends React.Component {
           hintText="Password"
           floatingLabelText="Password"
           value={firstName.value}
-          onChange={e => this.change(e)}
           errorText={firstName.error}
           type="password"
           floatingLabelFixed
+          onChange={this.onChangeValue}
+          onBlur={this.onCheckValue}
         />
         <br />
         <RaisedButton label="Submit" onClick={e => this.onSubmit(e)} primary />
