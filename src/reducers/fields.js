@@ -1,4 +1,10 @@
-import { CHANGE_VALUE, CHECK_VALUE, dateCheckExpression } from 'const';
+import {
+  CHANGE_VALUE,
+  CHECK_VALUE,
+  dateCheckExpression,
+  CHANGE_OPTION_EXP,
+  CHANGE_OPTION_STD,
+} from 'const';
 
 const initialValue = {
   value: '',
@@ -11,8 +17,8 @@ const initialState = {
   patronymic: initialValue,
   dateOfBirth: initialValue,
   education: initialValue,
-  developmentExperience: [],
-  whatDoYouWantToStudy: [],
+  developmentExperience: initialValue,
+  whatDoYouWantToStudy: initialValue,
   aboutMe: initialValue,
   phoneNumber: initialValue,
   email: initialValue,
@@ -29,6 +35,24 @@ const fields = (state = initialState, action) => {
         },
       };
 
+    case CHANGE_OPTION_EXP:
+      return {
+        ...state,
+        [action.payload.fieldName]: {
+          ...state.developmentExperience,
+          value: action.payload.optionValue,
+        },
+      };
+
+    case CHANGE_OPTION_STD:
+      return {
+        ...state,
+        [action.payload.fieldName]: {
+          ...state.whatDoYouWantToStudy,
+          value: action.payload.optionValue,
+        },
+      };
+
     case CHECK_VALUE:
       if (action.payload.value.length === 0) {
         return {
@@ -39,6 +63,8 @@ const fields = (state = initialState, action) => {
           },
         };
       }
+
+
       if (
         action.payload.fieldName === 'firstName'
         && action.payload.value.length < 5
@@ -51,6 +77,8 @@ const fields = (state = initialState, action) => {
           },
         };
       }
+
+
       if (
         action.payload.fieldName === 'dateOfBirth') {
         if (!action.payload.value.match(dateCheckExpression)) {
@@ -58,11 +86,12 @@ const fields = (state = initialState, action) => {
             ...state,
             [action.payload.fieldName]: {
               ...state[action.payload.fieldName],
-              error: 'Введите дату рорждения в формате дд.мм.гггг',
+              error: 'Введите дату в формате ДД-ММ-ГГГГ',
             },
           };
         }
       }
+
 
       return {
         ...state,

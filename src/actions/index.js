@@ -1,4 +1,9 @@
-import { CHANGE_VALUE, CHECK_VALUE } from 'const';
+import {
+  CHANGE_VALUE,
+  CHECK_VALUE,
+  CHANGE_OPTION_EXP,
+  CHANGE_OPTION_STD,
+} from 'const';
 
 export const changeValue = (fieldName, value) => ({
   type: CHANGE_VALUE,
@@ -13,5 +18,21 @@ export const checkValue = (fieldName, value) => ({
   payload: {
     fieldName,
     value,
+  },
+});
+
+export const changeValueOptionExp = optionValue => ({
+  type: CHANGE_OPTION_EXP,
+  payload: {
+    fieldName: 'developmentExperience',
+    optionValue,
+  },
+});
+
+export const changeValueOptionStudy = optionValue => ({
+  type: CHANGE_OPTION_STD,
+  payload: {
+    fieldName: 'whatDoYouWantToStudy',
+    optionValue,
   },
 });

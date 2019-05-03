@@ -3,26 +3,28 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import { v4 } from 'node-uuid';
+import { developmentExperienceArr, whatDoYouWantToStudyArr } from 'const';
 
 export default class Form extends React.Component {
-  items = [
-    <MenuItem key={1} value={1} primaryText="Never" />,
-    <MenuItem key={2} value={2} primaryText="Every Night" />,
-    <MenuItem key={3} value={3} primaryText="Weeknights" />,
-    <MenuItem key={4} value={4} primaryText="Weekends" />,
-    <MenuItem key={5} value={5} primaryText="Weekly" />,
-  ];
-
-handleChange = (event, index, value) => this.setState({ value });
-
-  onChangeValue = (e) => {
+  handleChangeValue = (e) => {
     const { onChangeValue } = this.props;
     onChangeValue(e.target.name, e.target.value);
   };
 
-  onCheckValue = (e) => {
+  handleCheckValue = (e) => {
     const { onCheckValue } = this.props;
     onCheckValue(e.target.name, e.target.value);
+  };
+
+  handleChangeValueOptionExp = (value) => {
+    const { onChangeValueOptionExp } = this.props;
+    onChangeValueOptionExp(value);
+  };
+
+  handleChangeValueOptionStudy = (value) => {
+    const { onChangeValueOptionStudy } = this.props;
+    onChangeValueOptionStudy(value);
   };
 
   validate = () => {
@@ -70,8 +72,6 @@ handleChange = (event, index, value) => this.setState({ value });
       aboutMe,
       phoneNumber,
       email,
-      onChangeValue,
-      onCheckValue,
     } = this.props.fields;
     return (
       <form>
@@ -81,8 +81,8 @@ handleChange = (event, index, value) => this.setState({ value });
           hintText="Введите имя"
           value={firstName.value}
           errorText={firstName.error}
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
+          onChange={this.handleChangeValue}
+          onBlur={this.handleCheckValue}
         />
         <br />
         <h4>Фамилия</h4>
@@ -91,8 +91,8 @@ handleChange = (event, index, value) => this.setState({ value });
           hintText="Введите фамилию"
           value={lastName.value}
           errorText={lastName.error}
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
+          onChange={this.handleChangeValue}
+          onBlur={this.handleCheckValue}
         />
         <br />
         <h4>Отчество</h4>
@@ -102,19 +102,19 @@ handleChange = (event, index, value) => this.setState({ value });
           value={patronymic.value}
           errorText={patronymic.error}
           type="text"
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
+          onChange={this.handleChangeValue}
+          onBlur={this.handleCheckValue}
         />
         <br />
         <h4>Дата рождения</h4>
         <TextField
           name="dateOfBirth"
-          hintText="дд.мм.гггг"
+          hintText="ДД-ММ-ГГГГ"
           value={dateOfBirth.value}
           errorText={dateOfBirth.error}
           type="text"
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
+          onChange={this.handleChangeValue}
+          onBlur={this.handleCheckValue}
         />
         <br />
         <h4>Образование</h4>
@@ -123,23 +123,40 @@ handleChange = (event, index, value) => this.setState({ value });
           hintText="Мой ответ"
           value={education.value}
           errorText={education.error}
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
+          onChange={this.handleChangeValue}
+          onBlur={this.handleCheckValue}
         />
         <br />
         <h4>Опыт в разработке</h4>
         <SelectField
           hintText="Выбрать"
-          onChange={this.handleChange}
+          onChange={this.handleChangeValueOptionExp}
+          value={developmentExperience.value}
+          name="developmentExperience"
+          labelStyle={{ textAlign: 'start' }}
         >
-          {developmentExperience}
+          {
+            developmentExperienceArr.map(
+              (item, index) => (
+                <MenuItem key={v4()} value={index} primaryText={item} />
+              ),
+            )
+          }
         </SelectField>
         <h4>Что хотите изучать</h4>
         <SelectField
           hintText="Выбрать"
-          onChange={this.handleChange}
+          onChange={this.handleChangeValueOptionStudy}
+          labelStyle={{ textAlign: 'start' }}
+          autoWidth
         >
-          {whatDoYouWantToStudy}
+          {
+            whatDoYouWantToStudyArr.map(
+              (item, index) => (
+                <MenuItem key={v4()} value={index} primaryText={item} />
+              ),
+            )
+          }
         </SelectField>
         <h4>Немного о себе</h4>
         <TextField
@@ -148,8 +165,8 @@ handleChange = (event, index, value) => this.setState({ value });
           value={aboutMe.value}
           errorText={aboutMe.error}
           type="text"
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
+          onChange={this.handleChangeValue}
+          onBlur={this.handleCheckValue}
         />
         <br />
         <h4>Мобильный телефон</h4>
@@ -159,8 +176,8 @@ handleChange = (event, index, value) => this.setState({ value });
           value={phoneNumber.value}
           errorText={phoneNumber.error}
           type="text"
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
+          onChange={this.handleChangeValue}
+          onBlur={this.handleCheckValue}
         />
         <br />
         <h4>Email</h4>
@@ -168,8 +185,8 @@ handleChange = (event, index, value) => this.setState({ value });
           name="email"
           hintText="Введите Email"
           errorText={email.error}
-          onChange={this.onChangeValue}
-          onBlur={this.onCheckValue}
+          onChange={this.handleChangeValue}
+          onBlur={this.handleCheckValue}
         />
         <br />
         <RaisedButton label="Submit" onClick={e => this.onSubmit(e)} primary />
