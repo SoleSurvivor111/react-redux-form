@@ -1,4 +1,4 @@
-import { CHANGE_VALUE, CHECK_VALUE } from 'const';
+import { CHANGE_VALUE, CHECK_VALUE, dateCheckExpression } from 'const';
 
 const initialValue = {
   value: '',
@@ -11,8 +11,8 @@ const initialState = {
   patronymic: initialValue,
   dateOfBirth: initialValue,
   education: initialValue,
-  developmentExperience: initialValue,
-  whatDoYouWantToStudy: initialValue,
+  developmentExperience: [],
+  whatDoYouWantToStudy: [],
   aboutMe: initialValue,
   phoneNumber: initialValue,
   email: initialValue,
@@ -52,17 +52,18 @@ const fields = (state = initialState, action) => {
         };
       }
       if (
-        action.payload.fieldName === 'password'
-        && action.payload.value.length < 8
-      ) {
-        return {
-          ...state,
-          [action.payload.fieldName]: {
-            ...state[action.payload.fieldName],
-            error: 'Пароль должнено быть не менее 8 символов.',
-          },
-        };
+        action.payload.fieldName === 'dateOfBirth') {
+        if (!action.payload.value.match(dateCheckExpression)) {
+          return {
+            ...state,
+            [action.payload.fieldName]: {
+              ...state[action.payload.fieldName],
+              error: 'Введите дату рорждения в формате дд.мм.гггг',
+            },
+          };
+        }
       }
+
       return {
         ...state,
         [action.payload.fieldName]: {
