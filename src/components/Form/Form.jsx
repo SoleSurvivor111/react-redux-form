@@ -17,28 +17,15 @@ export default class Form extends React.Component {
     onCheckValue(e.target.name, e.target.value);
   };
 
-  handleChangeValueOptionExp = (value) => {
+  handleChangeValueOptionExp = (e, index, value) => {
     const { onChangeValueOptionExp } = this.props;
     onChangeValueOptionExp(value);
   };
 
-  handleChangeValueOptionStudy = (value) => {
+  handleChangeValueOptionStudy = (e, index, value) => {
     const { onChangeValueOptionStudy } = this.props;
     onChangeValueOptionStudy(value);
   };
-
-  validate = () => {
-    const {
-      firstName,
-    } = this.props.fields;
-    let isError = false;
-    const errors = {};
-
-    if (firstName.length < 5) {
-      isError = true;
-      errors.firstName = 'Имя должно быть не менее 5 символов';
-    }
-  }
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -132,6 +119,7 @@ export default class Form extends React.Component {
           hintText="Выбрать"
           onChange={this.handleChangeValueOptionExp}
           value={developmentExperience.value}
+          errorText={developmentExperience.error}
           name="developmentExperience"
           labelStyle={{ textAlign: 'start' }}
         >
@@ -147,6 +135,8 @@ export default class Form extends React.Component {
         <SelectField
           hintText="Выбрать"
           onChange={this.handleChangeValueOptionStudy}
+          value={whatDoYouWantToStudy.value}
+          errorText={whatDoYouWantToStudy.error}
           labelStyle={{ textAlign: 'start' }}
           autoWidth
         >

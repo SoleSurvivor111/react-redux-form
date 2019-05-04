@@ -1,9 +1,11 @@
 import {
   CHANGE_VALUE,
   CHECK_VALUE,
-  dateCheckExpression,
   CHANGE_OPTION_EXP,
   CHANGE_OPTION_STD,
+  dateCheckExpression,
+  numberCheckExpression,
+  emailCheckExpression,
 } from 'const';
 
 const initialValue = {
@@ -41,6 +43,9 @@ const fields = (state = initialState, action) => {
         [action.payload.fieldName]: {
           ...state.developmentExperience,
           value: action.payload.optionValue,
+          error: action.payload.optionValue === 0
+            ? 'Это обязательный вопрос.'
+            : '',
         },
       };
 
@@ -50,6 +55,9 @@ const fields = (state = initialState, action) => {
         [action.payload.fieldName]: {
           ...state.whatDoYouWantToStudy,
           value: action.payload.optionValue,
+          error: action.payload.optionValue === 0
+            ? 'Это обязательный вопрос.'
+            : '',
         },
       };
 
@@ -87,6 +95,34 @@ const fields = (state = initialState, action) => {
             [action.payload.fieldName]: {
               ...state[action.payload.fieldName],
               error: 'Введите дату в формате ДД-ММ-ГГГГ',
+            },
+          };
+        }
+      }
+
+
+      if (
+        action.payload.fieldName === 'phoneNumber') {
+        if (!action.payload.value.match(numberCheckExpression)) {
+          return {
+            ...state,
+            [action.payload.fieldName]: {
+              ...state[action.payload.fieldName],
+              error: 'Введите номер в формате +7-XXX-XXX-XX-XX'
+            },
+          };
+        }
+      }
+
+
+      if (
+        action.payload.fieldName === 'email') {
+        if (!action.payload.value.match(emailCheckExpression)) {
+          return {
+            ...state,
+            [action.payload.fieldName]: {
+              ...state[action.payload.fieldName],
+              error: 'Email введен в неверном формате'
             },
           };
         }

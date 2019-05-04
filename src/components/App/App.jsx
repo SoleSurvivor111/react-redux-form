@@ -21,7 +21,7 @@ const App = ({
         onChangeValueOptionStudy={changeValueOptionStudy}
       />
       <p>
-      
+        {JSON.stringify(fields, null, 2)}
       </p>
     </div>
   </MuiThemeProvider>
