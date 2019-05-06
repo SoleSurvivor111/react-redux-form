@@ -50,18 +50,13 @@ export default class Form extends React.Component {
     } = fields;
     return (
       <form>
-        <h4
-          onSubmit={() => console.log(true)}
-        >
-          Имя
-        </h4>
+        <h4>Имя</h4>
         <TextField
           name="firstName"
           hintText="Введите имя"
           value={firstName.value}
           errorText={firstName.error}
           onChange={this.handleChangeValue}
-
           onBlur={this.handleCheckValue}
           onFocus={this.handleCheckValue}
         />

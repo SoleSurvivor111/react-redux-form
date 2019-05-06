@@ -5,13 +5,18 @@ import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from 'reducers';
 import AppContainer from 'containers/AppContainer';
-
-
+import throttle from 'lodash/throttle';
+import { loadState, saveState } from 'localStoreage';
 import 'index.css';
 
+const persistedState = loadState();
+const store = createStore(rootReducer, persistedState, composeWithDevTools());
 
-const store = createStore(rootReducer, composeWithDevTools());
-
+store.subscribe(throttle(() => {
+  saveState({
+    fields: store.getState().fields,
+  });
+}, 1000));
 ReactDOM.render(
   <Provider store={store}>
     <AppContainer />
