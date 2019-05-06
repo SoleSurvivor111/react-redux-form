@@ -3,6 +3,7 @@ import {
   CHECK_VALUE,
   CHANGE_OPTION_EXP,
   CHANGE_OPTION_STD,
+  SUBMIT,
 } from 'const';
 
 export const changeValue = (fieldName, value) => ({
@@ -34,5 +35,12 @@ export const changeValueOptionStudy = optionValue => ({
   payload: {
     fieldName: 'whatDoYouWantToStudy',
     optionValue,
+  },
+});
+
+export const submit = fields => ({
+  type: SUBMIT,
+  payload: {
+    fields,
   },
 });

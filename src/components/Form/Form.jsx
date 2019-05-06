@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import PropTypes from 'prop-types';
 import { v4 } from 'node-uuid';
 import { developmentExperienceArr, whatDoYouWantToStudyArr } from 'const';
 
@@ -27,27 +28,14 @@ export default class Form extends React.Component {
     onChangeValueOptionStudy(value);
   };
 
-  onSubmit = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
-    // this.props.onSubmit(this.state);
-    const err = this.validate();
-    this.setState({
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      password: '',
-    });
-    this.props.onChange({
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      password: '',
-    });
+    const { onSubmit, fields } = this.props;
+    onSubmit(fields);
   };
 
   render() {
+    const { fields } = this.props;
     const {
       firstName,
       lastName,
@@ -59,17 +47,23 @@ export default class Form extends React.Component {
       aboutMe,
       phoneNumber,
       email,
-    } = this.props.fields;
+    } = fields;
     return (
       <form>
-        <h4>Имя</h4>
+        <h4
+          onSubmit={() => console.log(true)}
+        >
+          Имя
+        </h4>
         <TextField
           name="firstName"
           hintText="Введите имя"
           value={firstName.value}
           errorText={firstName.error}
           onChange={this.handleChangeValue}
+
           onBlur={this.handleCheckValue}
+          onFocus={this.handleCheckValue}
         />
         <br />
         <h4>Фамилия</h4>
@@ -80,6 +74,7 @@ export default class Form extends React.Component {
           errorText={lastName.error}
           onChange={this.handleChangeValue}
           onBlur={this.handleCheckValue}
+          onFocus={this.handleCheckValue}
         />
         <br />
         <h4>Отчество</h4>
@@ -91,6 +86,7 @@ export default class Form extends React.Component {
           type="text"
           onChange={this.handleChangeValue}
           onBlur={this.handleCheckValue}
+          onFocus={this.handleCheckValue}
         />
         <br />
         <h4>Дата рождения</h4>
@@ -102,6 +98,7 @@ export default class Form extends React.Component {
           type="text"
           onChange={this.handleChangeValue}
           onBlur={this.handleCheckValue}
+          onFocus={this.handleCheckValue}
         />
         <br />
         <h4>Образование</h4>
@@ -112,6 +109,7 @@ export default class Form extends React.Component {
           errorText={education.error}
           onChange={this.handleChangeValue}
           onBlur={this.handleCheckValue}
+          onFocus={this.handleCheckValue}
         />
         <br />
         <h4>Опыт в разработке</h4>
@@ -157,6 +155,7 @@ export default class Form extends React.Component {
           type="text"
           onChange={this.handleChangeValue}
           onBlur={this.handleCheckValue}
+          onFocus={this.handleCheckValue}
         />
         <br />
         <h4>Мобильный телефон</h4>
@@ -168,6 +167,7 @@ export default class Form extends React.Component {
           type="text"
           onChange={this.handleChangeValue}
           onBlur={this.handleCheckValue}
+          onFocus={this.handleCheckValue}
         />
         <br />
         <h4>Email</h4>
@@ -177,10 +177,68 @@ export default class Form extends React.Component {
           errorText={email.error}
           onChange={this.handleChangeValue}
           onBlur={this.handleCheckValue}
+          onFocus={this.handleCheckValue}
         />
         <br />
-        <RaisedButton label="Submit" onClick={e => this.onSubmit(e)} primary />
+        <RaisedButton
+          label="Submit"
+          onClick={this.handleSubmit}
+          primary
+        />
       </form>
     );
   }
 }
+
+Form.propTypes = {
+  onChangeValue: PropTypes.func.isRequired,
+  onCheckValue: PropTypes.func.isRequired,
+  onChangeValueOptionExp: PropTypes.func.isRequired,
+  onChangeValueOptionStudy: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  fields: PropTypes.objectOf(
+    PropTypes.shape({
+      error: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]).isRequired,
+    }),
+  ).isRequired,
+  firstName: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
+  lastName: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
+  patronymic: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
+  dateOfBirth: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
+  education: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
+  developmentExperience: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+  }),
+  whatDoYouWantToStudy: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+  }),
+  aboutMe: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
+  phoneNumber: PropTypes.shape({
+    error: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
+};

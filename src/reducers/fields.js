@@ -3,6 +3,7 @@ import {
   CHECK_VALUE,
   CHANGE_OPTION_EXP,
   CHANGE_OPTION_STD,
+  SUBMIT,
   dateCheckExpression,
   numberCheckExpression,
   emailCheckExpression,
@@ -19,8 +20,8 @@ const initialState = {
   patronymic: initialValue,
   dateOfBirth: initialValue,
   education: initialValue,
-  developmentExperience: initialValue,
-  whatDoYouWantToStudy: initialValue,
+  developmentExperience: { error: '', value: 0 },
+  whatDoYouWantToStudy: { error: '', value: 0 },
   aboutMe: initialValue,
   phoneNumber: initialValue,
   email: initialValue,
@@ -108,7 +109,7 @@ const fields = (state = initialState, action) => {
             ...state,
             [action.payload.fieldName]: {
               ...state[action.payload.fieldName],
-              error: 'Введите номер в формате +7-XXX-XXX-XX-XX'
+              error: 'Введите номер в формате +7-XXX-XXX-XX-XX',
             },
           };
         }
@@ -122,7 +123,7 @@ const fields = (state = initialState, action) => {
             ...state,
             [action.payload.fieldName]: {
               ...state[action.payload.fieldName],
-              error: 'Email введен в неверном формате'
+              error: 'Email введен в неверном формате',
             },
           };
         }
@@ -137,6 +138,32 @@ const fields = (state = initialState, action) => {
         },
       };
 
+    // case SUBMIT: {
+    //   const {
+    //     firstName,
+    //     lastName,
+    //     patronymic,
+    //     dateOfBirth,
+    //     education,
+    //     developmentExperience,
+    //     whatDoYouWantToStudy,
+    //     aboutMe,
+    //     phoneNumber,
+    //     email,
+    //   } = action.payload.fields;
+    //   return {
+    //     firstName: firstName ,
+    //     lastName: initialValue,
+    //     patronymic: initialValue,
+    //     dateOfBirth: initialValue,
+    //     education: initialValue,
+    //     developmentExperience: { error: '', value: 0 },
+    //     whatDoYouWantToStudy: { error: '', value: 0 },
+    //     aboutMe: initialValue,
+    //     phoneNumber: initialValue,
+    //     email: initialValue,
+    //   };
+    // }
     default:
       return state;
   }

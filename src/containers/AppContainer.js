@@ -5,6 +5,8 @@ import * as actions from 'actions';
 
 const mapStateToProps = state => ({
   fields: state.fields,
+  submitErrors: state.submit.submitErrors,
+  submitValues: state.submit.submitValues,
 });
 
 const mapDispatchToProps = disathch => ({
