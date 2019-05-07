@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
-import fields from 'reducers/fields';
-import submit from 'reducers/submit';
+import formFields from 'reducers/fields';
 
 export default combineReducers({
-  fields,
-  submit,
+  formFields,
 });

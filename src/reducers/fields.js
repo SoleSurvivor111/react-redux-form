@@ -29,7 +29,7 @@ const returnSelectState = (action, state, error) => ({
   },
 });
 
-const fields = (state = initialState, action) => {
+const formFields = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE_VALUE:
       return {
@@ -86,12 +86,50 @@ const fields = (state = initialState, action) => {
 
       return returnState(action, state, '');
 
-      // case SUBMIT: {
-      //
-      // }
+    case SUBMIT: {
+      const arrOfKeys = Object.keys(state).splice(0, 10);
+      let errors = false;
+      for (let i = 0; i < arrOfKeys.length; i += 1) {
+        const item = state[arrOfKeys[i]];
+        if (item.error) {
+          errors = true;
+          break;
+        }
+      }
+
+      let values = true;
+      for (let i = 0; i < arrOfKeys.length; i += 1) {
+        const item = state[arrOfKeys[i]];
+        if (!item.value) {
+          values = false;
+          break;
+        }
+      }
+      let newState = { ...state };
+      if (!values) {
+        for (let i = 0; i < arrOfKeys.length; i += 1) {
+          const item = state[arrOfKeys[i]];
+          if (!item.value) {
+            errors = true;
+            newState = {
+              ...newState,
+              [arrOfKeys[i]]: {
+                ...item,
+                error: 'Это обязательный вопрос.',
+              },
+            };
+          }
+        }
+      }
+      return {
+        ...newState,
+        submitErrors: errors,
+        submitValues: values,
+      };
+    }
 
     default:
       return state;
   }
 };
-export default fields;
+export default formFields;

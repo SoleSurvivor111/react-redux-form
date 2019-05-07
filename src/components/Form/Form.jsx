@@ -169,6 +169,7 @@ export default class Form extends React.Component {
         <TextField
           name="email"
           hintText="Введите Email"
+          value={email.value}
           errorText={email.error}
           onChange={this.handleChangeValue}
           onBlur={this.handleCheckValue}
@@ -197,6 +198,7 @@ Form.propTypes = {
       value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
+        PropTypes.object,
       ]).isRequired,
     }),
   ).isRequired,
