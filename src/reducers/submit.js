@@ -20,11 +20,11 @@ const submit = (state = initialState, action) => {
         }
       }
 
-      let values = false;
+      let values = true;
       for (let i = 0; i < arrOfKeys.length; i += 1) {
         const item = fields[arrOfKeys[i]];
         if (!item.value) {
-          values = true;
+          values = false;
           break;
         }
       }

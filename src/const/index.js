@@ -1,3 +1,21 @@
+const initialValue = {
+  value: '',
+  error: '',
+};
+
+export const initialState = {
+  firstName: initialValue,
+  lastName: initialValue,
+  patronymic: initialValue,
+  dateOfBirth: initialValue,
+  education: initialValue,
+  developmentExperience: { error: '', value: 0 },
+  whatDoYouWantToStudy: { error: '', value: 0 },
+  aboutMe: initialValue,
+  phoneNumber: initialValue,
+  email: initialValue,
+};
+
 export const CHECK_VALUE = 'CHECK_VALUE';
 export const CHANGE_VALUE = 'CHANGE_VALUE';
 export const SUBMIT = 'SUBMIT';

@@ -1,4 +1,5 @@
 import {
+  initialState,
   CHANGE_VALUE,
   CHECK_VALUE,
   CHANGE_OPTION_EXP,
@@ -9,23 +10,24 @@ import {
   emailCheckExpression,
 } from 'const';
 
-const initialValue = {
-  value: '',
-  error: '',
-};
+const returnState = (action, state, error) => ({
+  ...state,
+  [action.payload.fieldName]: {
+    ...state[action.payload.fieldName],
+    error,
+  },
+});
 
-const initialState = {
-  firstName: initialValue,
-  lastName: initialValue,
-  patronymic: initialValue,
-  dateOfBirth: initialValue,
-  education: initialValue,
-  developmentExperience: { error: '', value: 0 },
-  whatDoYouWantToStudy: { error: '', value: 0 },
-  aboutMe: initialValue,
-  phoneNumber: initialValue,
-  email: initialValue,
-};
+const returnSelectState = (action, state, error) => ({
+  ...state,
+  [action.payload.fieldName]: {
+    ...state[action.payload.fieldName],
+    value: action.payload.optionValue,
+    error: action.payload.optionValue === 0
+      ? error
+      : '',
+  },
+});
 
 const fields = (state = initialState, action) => {
   switch (action.type) {
@@ -39,38 +41,14 @@ const fields = (state = initialState, action) => {
       };
 
     case CHANGE_OPTION_EXP:
-      return {
-        ...state,
-        [action.payload.fieldName]: {
-          ...state.developmentExperience,
-          value: action.payload.optionValue,
-          error: action.payload.optionValue === 0
-            ? 'Это обязательный вопрос.'
-            : '',
-        },
-      };
+      return returnSelectState(action, state, 'Это обязательный вопрос.');
 
     case CHANGE_OPTION_STD:
-      return {
-        ...state,
-        [action.payload.fieldName]: {
-          ...state.whatDoYouWantToStudy,
-          value: action.payload.optionValue,
-          error: action.payload.optionValue === 0
-            ? 'Это обязательный вопрос.'
-            : '',
-        },
-      };
+      return returnSelectState(action, state, 'Это обязательный вопрос.');
 
     case CHECK_VALUE:
       if (action.payload.value.length === 0) {
-        return {
-          ...state,
-          [action.payload.fieldName]: {
-            ...state[action.payload.fieldName],
-            error: 'Это обязательный вопрос.',
-          },
-        };
+        return returnState(action, state, 'Это обязательный вопрос.');
       }
 
 
@@ -78,40 +56,22 @@ const fields = (state = initialState, action) => {
         action.payload.fieldName === 'firstName'
         && action.payload.value.length < 5
       ) {
-        return {
-          ...state,
-          [action.payload.fieldName]: {
-            ...state[action.payload.fieldName],
-            error: 'Имя должно быть не менее 5 символов.',
-          },
-        };
+        return returnState(action, state, 'Имя должно быть не менее 5 символов.');
       }
 
 
       if (
-        action.payload.fieldName === 'dateOfBirth') {
-        if (!action.payload.value.match(dateCheckExpression)) {
-          return {
-            ...state,
-            [action.payload.fieldName]: {
-              ...state[action.payload.fieldName],
-              error: 'Введите дату в формате ДД-ММ-ГГГГ',
-            },
-          };
-        }
+        action.payload.fieldName === 'dateOfBirth'
+        && !action.payload.value.match(dateCheckExpression)
+      ) {
+        return returnState(action, state, 'Введите дату в формате ДД-ММ-ГГГГ');
       }
 
 
       if (
         action.payload.fieldName === 'phoneNumber') {
         if (!action.payload.value.match(numberCheckExpression)) {
-          return {
-            ...state,
-            [action.payload.fieldName]: {
-              ...state[action.payload.fieldName],
-              error: 'Введите номер в формате +7-XXX-XXX-XX-XX',
-            },
-          };
+          return returnState(action, state, 'Введите номер в формате +7-XXX-XXX-XX-XX');
         }
       }
 
@@ -119,51 +79,17 @@ const fields = (state = initialState, action) => {
       if (
         action.payload.fieldName === 'email') {
         if (!action.payload.value.match(emailCheckExpression)) {
-          return {
-            ...state,
-            [action.payload.fieldName]: {
-              ...state[action.payload.fieldName],
-              error: 'Email введен в неверном формате',
-            },
-          };
+          return returnState(action, state, 'Email введен в неверном формате');
         }
       }
 
 
-      return {
-        ...state,
-        [action.payload.fieldName]: {
-          ...state[action.payload.fieldName],
-          error: '',
-        },
-      };
+      return returnState(action, state, '');
 
-    // case SUBMIT: {
-    //   const {
-    //     firstName,
-    //     lastName,
-    //     patronymic,
-    //     dateOfBirth,
-    //     education,
-    //     developmentExperience,
-    //     whatDoYouWantToStudy,
-    //     aboutMe,
-    //     phoneNumber,
-    //     email,
-    //   } = action.payload.fields;
-    //   return {
-    //     firstName: firstName ,
-    //     lastName: initialValue,
-    //     patronymic: initialValue,
-    //     dateOfBirth: initialValue,
-    //     education: initialValue,
-    //     developmentExperience: { error: '', value: 0 },
-    //     whatDoYouWantToStudy: { error: '', value: 0 },
-    //     aboutMe: initialValue,
-    //     phoneNumber: initialValue,
-    //     email: initialValue,
-    //   };
-    // }
+      // case SUBMIT: {
+      //
+      // }
+
     default:
       return state;
   }

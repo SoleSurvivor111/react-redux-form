@@ -15,6 +15,7 @@ const store = createStore(rootReducer, persistedState, composeWithDevTools());
 store.subscribe(throttle(() => {
   saveState({
     fields: store.getState().fields,
+    submit: store.getState().submit,
   });
 }, 1000));
 ReactDOM.render(
