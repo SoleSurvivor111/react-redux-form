@@ -50,6 +50,8 @@ export default class Form extends React.Component {
     } = fields;
     return (
       <form>
+        <h1>Стажировка в Dr Pepper</h1>
+        <p>Пожалуйста, заполните как можно подробнее данную заявку.</p>
         <h4>Имя</h4>
         <TextField
           name="firstName"
@@ -181,6 +183,7 @@ export default class Form extends React.Component {
           onClick={this.handleSubmit}
           primary
         />
+        {!fields.submitValues && fields.submitErrors && <h3>Заполнетие все поля</h3>}
       </form>
     );
   }
@@ -198,7 +201,6 @@ Form.propTypes = {
       value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
-        PropTypes.object,
       ]).isRequired,
     }),
   ).isRequired,

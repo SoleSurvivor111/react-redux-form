@@ -1,5 +1,6 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Resume from 'components/Resume/Resume';
 import PropTypes from 'prop-types';
 
 import Form from 'components/Form/Form';
@@ -13,13 +14,10 @@ const App = ({
   changeValueOptionExp,
   changeValueOptionStudy,
   submit,
-  submitErrors,
-  submitValues,
+  initials,
 }) => (
   <MuiThemeProvider>
     <div className="App">
-      <h1>Стажировка в Dr Pepper</h1>
-      <p>Пожалуйста, заполните как можно подробнее данную заявку.</p>
       <Form
         fields={fields}
         onChangeValue={changeValue}
@@ -28,24 +26,31 @@ const App = ({
         onChangeValueOptionStudy={changeValueOptionStudy}
         onSubmit={submit}
       />
-      {!submitValues && submitErrors && <h3>Заполнетие все поля</h3>}
-      <p>
-        {!submitErrors && submitValues && JSON.stringify(fields, null, 2)}
-      </p>
+      <Resume
+        initials={initials}
+      />
     </div>
   </MuiThemeProvider>
 );
 
+// <p>
+//   {!submitErrors && submitValues && JSON.stringify(fields, null, 2)}
+// </p>
+
 App.propTypes = {
-  fields: PropTypes.objectOf(
-    PropTypes.shape({
-      error: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-      ]).isRequired,
-    }),
-  ).isRequired,
+  fields: PropTypes.oneOfType([
+    PropTypes.objectOf(
+      PropTypes.shape({
+        error: PropTypes.string.isRequired,
+        value: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+        ]).isRequired,
+      }),
+    ),
+    PropTypes.bool,
+  ]).isRequired,
+  initials: PropTypes.string.isRequired,
   submitErrors: PropTypes.bool.isRequired,
   submitValues: PropTypes.bool.isRequired,
   changeValue: PropTypes.func.isRequired,
