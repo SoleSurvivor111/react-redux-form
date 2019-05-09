@@ -1,0 +1,13 @@
+.initials {
+  text-align: left;
+  margin-left: 10px;
+}
+ .avatar {
+   float:left;
+   margin: 0 10px;
+   height: 140px;
+ }
+
+.container {
+  text-align: left;
+}

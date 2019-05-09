@@ -14,7 +14,6 @@ const App = ({
   changeValueOptionExp,
   changeValueOptionStudy,
   submit,
-  initials,
 }) => (
   <MuiThemeProvider>
     <div className="App">
@@ -27,29 +26,23 @@ const App = ({
         onSubmit={submit}
       />
       <Resume
-        initials={initials}
+        {...fields}
       />
     </div>
   </MuiThemeProvider>
 );
 
-// <p>
-//   {!submitErrors && submitValues && JSON.stringify(fields, null, 2)}
-// </p>
-
 App.propTypes = {
-  fields: PropTypes.oneOfType([
-    PropTypes.objectOf(
-      PropTypes.shape({
-        error: PropTypes.string.isRequired,
-        value: PropTypes.oneOfType([
-          PropTypes.string,
-          PropTypes.number,
-        ]).isRequired,
-      }),
-    ),
-    PropTypes.bool,
-  ]).isRequired,
+
+  fields: PropTypes.objectOf(
+    PropTypes.shape({
+      error: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+      ]).isRequired,
+    }),
+  ),
   initials: PropTypes.string.isRequired,
   submitErrors: PropTypes.bool.isRequired,
   submitValues: PropTypes.bool.isRequired,

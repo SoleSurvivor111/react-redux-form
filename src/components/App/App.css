@@ -25,15 +25,3 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-.initials {
-  text-align: left;
-  margin-left: 10px;
-}
- .avatar {
-   float:left;
-   margin: 0 10px;
- }
-
-.container {
-  text-align: left;
-}
