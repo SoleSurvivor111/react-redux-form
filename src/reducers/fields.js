@@ -87,7 +87,7 @@ const formFields = (state = initialState, action) => {
       return returnState(action, state, '');
 
     case SUBMIT: {
-      const arrOfKeys = Object.keys(state);
+      const arrOfKeys = Object.keys(state).splice(0, 10);
       let errors = false;
       for (let i = 0; i < arrOfKeys.length; i += 1) {
         const item = state[arrOfKeys[i]];

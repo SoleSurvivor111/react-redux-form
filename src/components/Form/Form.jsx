@@ -35,7 +35,11 @@ export default class Form extends React.Component {
   };
 
   render() {
-    const { fields } = this.props;
+    const {
+      fields,
+      submitErrors,
+      submitValues,
+    } = this.props;
     const {
       firstName,
       lastName,
@@ -183,18 +187,17 @@ export default class Form extends React.Component {
           onClick={this.handleSubmit}
           primary
         />
-        {!fields.submitValues && fields.submitErrors && <h3>Заполнетие все поля</h3>}
+        {!submitValues && submitErrors && <h3>Заполнетие все поля</h3>}
+        {submitValues && submitErrors && <h3>Заполните все поля корректно</h3>}
+        {submitValues && !submitErrors && <h1>Submit</h1>}
       </form>
     );
   }
 }
 
 Form.propTypes = {
-  onChangeValue: PropTypes.func.isRequired,
-  onCheckValue: PropTypes.func.isRequired,
-  onChangeValueOptionExp: PropTypes.func.isRequired,
-  onChangeValueOptionStudy: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  submitErrors: PropTypes.bool,
+  submitValues: PropTypes.bool,
   fields: PropTypes.objectOf(
     PropTypes.shape({
       error: PropTypes.string.isRequired,
@@ -240,4 +243,14 @@ Form.propTypes = {
     error: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   }),
+  onChangeValue: PropTypes.func.isRequired,
+  onCheckValue: PropTypes.func.isRequired,
+  onChangeValueOptionExp: PropTypes.func.isRequired,
+  onChangeValueOptionStudy: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+Form.defaultProps = {
+  submitErrors: null,
+  submitValues: null,
 };

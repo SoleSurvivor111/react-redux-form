@@ -14,8 +14,8 @@ export const initialState = {
   aboutMe: initialValue,
   phoneNumber: initialValue,
   email: initialValue,
-  submitErrors: false,
-  submitValues: false,
+  submitErrors: null,
+  submitValues: null,
 };
 
 export const CHECK_VALUE = 'CHECK_VALUE';

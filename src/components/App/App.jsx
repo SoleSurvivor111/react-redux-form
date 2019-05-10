@@ -9,6 +9,8 @@ import './App.css';
 
 const App = ({
   fields,
+  submitErrors,
+  submitValues,
   changeValue,
   checkValue,
   changeValueOptionExp,
@@ -19,6 +21,8 @@ const App = ({
     <div className="App">
       <Form
         fields={fields}
+        submitErrors={submitErrors}
+        submitValues={submitValues}
         onChangeValue={changeValue}
         onCheckValue={checkValue}
         onChangeValueOptionExp={changeValueOptionExp}
@@ -33,7 +37,6 @@ const App = ({
 );
 
 App.propTypes = {
-
   fields: PropTypes.objectOf(
     PropTypes.shape({
       error: PropTypes.string.isRequired,
@@ -43,14 +46,18 @@ App.propTypes = {
       ]).isRequired,
     }),
   ),
-  initials: PropTypes.string.isRequired,
-  submitErrors: PropTypes.bool.isRequired,
-  submitValues: PropTypes.bool.isRequired,
+  submitErrors: PropTypes.bool,
+  submitValues: PropTypes.bool,
   changeValue: PropTypes.func.isRequired,
   checkValue: PropTypes.func.isRequired,
   changeValueOptionExp: PropTypes.func.isRequired,
   changeValueOptionStudy: PropTypes.func.isRequired,
   submit: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+  submitErrors: null,
+  submitValues: null,
 };
 
 export default App;

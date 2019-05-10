@@ -11,10 +11,6 @@ const mapStateToProps = (state) => {
   } = state.formFields;
   return {
     fields,
-    initials:
-    `${state.formFields.lastName.value}
-    ${state.formFields.firstName.value}
-    ${state.formFields.patronymic.value}`,
     submitErrors: state.formFields.submitErrors,
     submitValues: state.formFields.submitValues,
   };
